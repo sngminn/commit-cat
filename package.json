@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
+    "@clack/prompts": "^0.11.0",
     "@google/generative-ai": "^0.21.0",
-    "dotenv": "^16.4.5"
+    "chalk": "^5.6.2",
+    "dotenv": "^16.4.5",
+    "gradient-string": "^3.0.0"
+  },
+  "bin": {
+    "cmcat": "./commit-cat.mjs"
   }
 }
