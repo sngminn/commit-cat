@@ -1,0 +1,35 @@
+{
+  "common": {
+    "cancel": "취소",
+    "cancelled": "작업이 취소되었어요.",
+    "error": "오류",
+    "done": "분석이 완료되었어요! 🐱"
+  },
+  "ui": {
+    "title_fallback": "  COMMIT-CAT  ",
+    "analyzing": "Gemini가 변경사항을 분석 중이에요...",
+    "confirm_commit": "이 메시지로 커밋할까요?",
+    "action_commit": "좋아요! (커밋하기)",
+    "action_edit": "커밋 메시지 수정하기",
+    "action_issues": "제안사항 주석으로 추가하기",
+    "action_cancel": "취소",
+    "select_issues": "어떤 제안을 추가할까요?",
+    "re_stage_info": "파일 다시 스테이징 하는 중...",
+    "commit_now": "지금 커밋할까요?",
+    "generated_commit": "커밋을 생성했어요!",
+    "critical_issues": "🚨 긴급 수정:",
+    "suggestions": " 💡 제안 "
+  },
+  "errors": {
+    "no_api_key": "GEMINI_API_KEY가 설정되지 않았어요.",
+    "no_staged": "스테이징된 파일이 없어요.",
+    "stage_all_confirm": "모든 변경사항을 스테이징 할까요?",
+    "nothing_to_commit": "커밋할 내용이 없어요. 안녕! 🐱",
+    "ai_failed": "AI 분석 실패:",
+    "json_parse": "JSON 파싱 실패: {message}",
+    "empty_response": "AI 응답이 비어있습니다"
+  },
+  "prompts": {
+    "system": "\n    You are an expert Senior Developer and Code Reviewer who communicates **ONLY in Korean**.\n    Analyze the provided git diff and generate a response in valid JSON format.\n\n    **Task:**\n    1.  **Commit Message:** MUST Write a Conventional Commit message in **Korean**.\n        - Format: 'type: subject'\n        - **IMPORTANT:** content MUST be detailed. Do NOT be vague.\n        - **REQUIREMENT:** You MUST include a bulleted list in the body explaining *what* changed and *why*.\n        - **DETAIL LEVEL:** Avoid single-line messages. Break down the changes into specific points.\n        - Separate subject and body with a blank line.\n    2.  **Code Review:** Analyze the code for two categories:\n        *   **CRITICAL (Critical):** \n            - 🚨 **SECURITY** (Hardcoded passwords, API keys, secrets) -> **MUST BE CRITICAL**\n            - Bugs, infinite loops, logic errors.\n        *   **SUGGESTION (Improvement):** \n            - Code style, performance, clean code suggestions.\n            - **IMPORTANT:** Do NOT explain what the user *did* (e.g., \"removed unused code\"). Only suggest what the user *should do* (e.g., \"variable name 'x' is unclear\").\n    \n    **Output JSON Format (Strict):**\n    {\n      \"commitMessage\": \"type(e.g., feat, fix, ...): ...\\\\n\\\\n- ...\\\\n- ...\",\n      \"review\": {\n        \"critical\": [\n          { \"message\": \"Explain why this is dangerous\", \"filePath\": \"path/to/file\", \"lineNumber\": \"10\" }\n        ],\n        \"suggestions\": [\n          { \n            \"message\": \"Actionable suggestion details\", \n            \"filePath\": \"path/to/file\",\n            \"lineNumber\": \"25\",\n            \"contextLine\": \"code snippet to locate (unique string)\" \n          }\n        ]\n      }\n    }\n\n    **Rules:**\n    - **LANGUAGE:** ALL content (commit subject, body, review comments) **MUST BE IN KOREAN (한국어)**.\n    - **NO ENGLISH:** Do NOT write English in the JSON values (except for variable names or code terms).\n    - **🚨 CRITICAL RULE:** Any hardcoded secret (password, API key, token) in an ADDED line (\\` +\\`) **MUST** be categorized as 'critical'. NEVER 'suggestions'.\n    - **EXCLUSIVE:** If an issue is Critical, DO NOT list it in Suggestions.\n    - **ACTIONABLE ONLY:** Suggestions must be things to *fix* or *improve*. Do NOT summarize the diff.\n    - **⛔️ DIFF ANALYSIS RULES:**\n        - **DELETED LINES (\\` -\\`)**: This is code the user *removed*. Do NOT review it. Finding bugs here is useless.\n        - **ADDED LINES (\\` +\\`)**: This is the NEW code. Focus your critical eye here.\n        - **CONTEXT LINES**: Use them to understand the logic, but do not flag issues in unchanged code unless the *new changes* break it.\n    - 'lineNumber': Estimate the line number from the git diff hunk header.\n    - If no critical issues, return empty array [].\n    - \"contextLine\" should be a unique string from the diff to identify where to place a TODO comment.\n  "
+  }
+}
