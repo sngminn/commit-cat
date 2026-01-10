@@ -99,7 +99,6 @@ function wrapText(text, maxWidth) {
   return lines.join("\n");
 }
 
-// TODO: [AI] review.suggestions.map 콜백 함수 내에서 fullLabel 생성 시 wrapText 함수를 호출하지만, wrapText 함수 자체의 maxWidth 인자가 명시적으로 설정되지 않았습니다. 이는 wrapText 함수 내부의 기본 maxWidth (80 또는 process.stdout.columns - 6)를 사용하게 됩니다. 제안 목록의 각 줄이 예상대로 줄 바꿈되지 않을 가능성이 있으므로, wrapText에 적절한 maxWidth 값을 전달하는 것을 고려해야 합니다.
 function cleanTitle(rawTitle) {
   return rawTitle
     .split("\n")
@@ -540,6 +539,7 @@ async function main() {
           return {
             value: idx,
             label: `${prefix}${context}\n${chalk.dim("-")}\n${body}\n`,
+            // hint is strictly for the side, but we moved context inside label for better visibility as requested
           };
         }),
       })
