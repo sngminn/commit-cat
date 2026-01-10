@@ -1,11 +1,6 @@
 <div align="center">
+<img width="716" height="94" alt="commitcat" src="https://github.com/user-attachments/assets/ae050994-6d3c-42af-b272-1bda53bfd4a2" />
 
-<!-- prettier-ignore -->
-```text
-▄█████ ▄████▄ ██▄  ▄██ ██▄  ▄██ ██ ██████    ▄█████ ▄████▄ ██████ 
-██     ██  ██ ██ ▀▀ ██ ██ ▀▀ ██ ██   ██  ▄▄▄ ██     ██▄▄██   ██   
-▀█████ ▀████▀ ██    ██ ██    ██ ██   ██      ▀█████ ██  ██   ██   
-```
 
 **"고민은 개발만 늦출 뿐, 커밋 메시지 고민은 Commit-cat에게 맡기세요."**
 
@@ -13,7 +8,7 @@
 [![license](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![node](https://img.shields.io/badge/node-%3E%3D18.0.0-orange.svg)](https://nodejs.org)
 
-`commit-cat`은 **Gemini AI**를 활용하여 Git Stage에 올라온 변경 사항을 분석하고,<br/>가장 적절한 커밋 메시지를 제안하는 스마트한 CLI 도구입니다.
+`commit-cat`은 **Gemini AI**를 활용하여 Git Stage에 올라온 변경 사항을 분석하고,<br/>가장 적절한 커밋 메시지를 제안, 간단한 코드리뷰를 해줍니다.
 
 [English](#-usage-en) | [한국어](#-usage-ko)
 
@@ -21,16 +16,16 @@
 
 ---
 
-## Features
+## 핵심 기능
 
-- Google Gemini API를 통해 소스 코드의 문맥을 이해하고 커밋 메시지 생성해요.
+- Google Gemini API를 통해 소스 코드의 문맥을 이해하고 커밋 메시지를 생성해요.
 - 변경된 파일과 라인 정보를 정밀하게 분석하여 요약해요.
 - 개선점이나 취약점이 보이면 알려줘요.
 - 가벼운 모델을 사용해 5초 내에 응답을 받을 수 있어요.
 
 ---
 
-## Installation
+## 설치
 
 ```bash
 # Clone the repository
@@ -45,7 +40,7 @@ npm link
 
 ---
 
-## Configuration
+## 설정
 
 루트 디렉토리에 `.env` 파일을 생성하고 Gemini API 키를 설정하세요.
 
@@ -55,7 +50,7 @@ GEMINI_API_KEY=your_google_gemini_api_key_here
 
 ---
 
-## Usage (KO)
+## 사용법
 
 가장 빈번하게 사용되는 명령어입니다.
 
@@ -73,7 +68,7 @@ commit-cat -k
 
 ---
 
-## Usage (EN)
+## Usage
 
 ```bash
 # Default execution (Suggests English messages)
