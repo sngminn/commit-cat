@@ -1,6 +1,6 @@
 {
-  "name": "my-secret-tools",
-  "version": "1.0.0",
+  "name": "commit-cat",
+  "version": "0.2.0",
   "type": "module",
   "dependencies": {
     "@clack/prompts": "^0.11.0",

@@ -64,10 +64,37 @@ function handleCancel(value) {
   return value;
 }
 
+function wrapText(text, maxWidth) {
+  if (!text) return "";
+  const width = maxWidth || Math.min(80, process.stdout.columns - 6); // Safe width
+  return text.replace(
+    new RegExp(`(?![^\\n]{1,${width}}$)([^\\n]{1,${width}})\\s`, "g"),
+    "$1\n"
+  );
+}
+
+function cleanTitle(rawTitle) {
+  return rawTitle
+    .split("\n")
+    .map((l) => l.trimEnd())
+    .join("\n");
+}
+
 function printTitle() {
   const titlePath = path.join(__dirname, "title.txt");
   if (fs.existsSync(titlePath)) {
-    const title = fs.readFileSync(titlePath, "utf-8");
+    let title = fs.readFileSync(titlePath, "utf-8");
+    title = cleanTitle(title);
+
+    // Check width
+    const titleWidth = Math.max(...title.split("\n").map((l) => l.length));
+    // TODO: [AI] The logic for checking terminal width against title width (`process.stdout.columns < titleWidth + 4`) is a bit arbitrary. Consider if there's a more standard or configurable way to handle this, or if the magic number `4` could be a constant.
+    if (process.stdout.columns < titleWidth + 4) {
+      // Fallback on narrow screens
+      console.log("\n" + gradient.pastel("  COMMIT-CAT  "));
+      return;
+    }
+
     // Vibrant Neon Rainbow 2 (Fixed Dark Spots)
     const rainbow2 = gradient([
       "#ffff00", // Bright Yellow
@@ -371,18 +398,21 @@ async function main() {
 
   if (review?.suggestions?.length > 0) {
     p.log.warn(
-      chalk.bold.yellow(
-        lang === "ko" ? "💡 제안 (Suggestions):" : "💡 SUGGESTIONS:"
+      chalk.bgYellow.black(
+        lang === "ko" ? " 💡 제안 (Suggestions) " : " 💡 SUGGESTIONS "
       )
     );
+    console.log(""); // Gap
     review.suggestions.forEach((c) => {
-      console.log(chalk.yellow(` [${c.filePath}] ${c.message}`));
+      console.log(chalk.bgYellow.black(` ${c.filePath} `));
+      console.log(chalk.yellow(wrapText(c.message)));
+      console.log(""); // Spacing
     });
   }
 
   console.log("");
   p.note(
-    commitMessage,
+    wrapText(commitMessage),
     lang === "ko" ? "추천 커밋 메시지" : "Proposed Commit Message"
   );
 
