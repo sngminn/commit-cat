@@ -17,7 +17,7 @@ import {
 } from "../src/git.js";
 import { I18n } from "../src/i18n.js";
 import { printTitle } from "../src/ui.js";
-import { handleCancel, wrapText } from "../src/utils.js";
+import { handleCancel, wrapText, boxMessage } from "../src/utils.js";
 
 // Load env from package root
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -171,9 +171,9 @@ async function main() {
   // 5. ACTION LOOP
   while (true) {
     console.log("");
-    p.note(
-      wrapText(currentMessage, 0, process),
-      i18n.t("ui.title_fallback").trim()
+    // Replaced p.note with custom boxMessage
+    console.log(
+      boxMessage(i18n.t("ui.title_fallback").trim(), currentMessage, process)
     );
 
     const action = handleCancel(

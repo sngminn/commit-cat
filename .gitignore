@@ -29,3 +29,6 @@ logs/
 .vscode/
 *.swp
 *.swo
+
+# Docs
+docs/
